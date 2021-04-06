@@ -33,11 +33,20 @@ services:
     ports:
       - "8200:8200"
 
-  app:
+  pyapp:
     build:
-      context: ./app
+      context: ./app/pyapp
     ports:
       - 8080:8080
+
+  goapp:
+    build:
+      context: ./app/goapp
+    environment:
+      ELASTIC_APM_SERVICE_NAME: goapp
+      ELASTIC_APM_SERVER_URL: http://apm-server:8200 
+    ports:
+      - 8081:8080
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
